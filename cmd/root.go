@@ -62,6 +62,12 @@ Find document on: https://github.com/zu1k/nali
 	Run: func(cmd *cobra.Command, args []string) {
 		gbk, _ := cmd.Flags().GetBool("gbk")
 		isJson, _ := cmd.Flags().GetBool("json")
+		isServer, _ := cmd.Flags().GetBool("server")
+		port, _ := cmd.Flags().GetInt("port")
+		if isServer {
+			fmt.Println("use server")
+			server(port)
+		}
 
 		if len(args) == 0 {
 			stdin := bufio.NewScanner(os.Stdin)
@@ -102,4 +108,6 @@ func Execute() {
 func init() {
 	rootCmd.Flags().Bool("gbk", false, "Use GBK decoder")
 	rootCmd.Flags().BoolP("json", "j", false, "Output in JSON format")
+	rootCmd.Flags().BoolP("server", "s", false, "use server")
+	rootCmd.Flags().Int("port", 8080, "use server port")
 }
